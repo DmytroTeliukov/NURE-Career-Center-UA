@@ -29,13 +29,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public CreatedAccount register(RegistrationAccount registrationAccount) {
-        if (accountRepository.existsAccountByEmail(registrationAccount.getEmail())) {
-            throw new EmailAlreadyRegisteredException();
-        } else if (accountRepository.existsAccountByPhone(registrationAccount.getPhone())) {
-            throw new PhoneAlreadyRegisteredException();
-        } else if (!registrationAccount.getConfirmedPassword().equals(registrationAccount.getPassword())) {
-            throw new IllegalPasswordArgumentException();
-        }
+        validateRegistrationData(registrationAccount);
 
         Account account = Account.builder()
                 .id(UUID.randomUUID())
@@ -62,5 +56,15 @@ public class AccountServiceImpl implements AccountService {
                 createdAccount.getPhone(),
                 createdAccount.getRole(),
                 createdAccount.getJoined());
+    }
+
+    private void validateRegistrationData(RegistrationAccount registrationAccount) {
+        if (accountRepository.existsAccountByEmail(registrationAccount.getEmail())) {
+            throw new EmailAlreadyRegisteredException();
+        } else if (accountRepository.existsAccountByPhone(registrationAccount.getPhone())) {
+            throw new PhoneAlreadyRegisteredException();
+        } else if (!registrationAccount.getConfirmedPassword().equals(registrationAccount.getPassword())) {
+            throw new IllegalPasswordArgumentException();
+        }
     }
 }
