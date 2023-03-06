@@ -46,6 +46,9 @@ public class AccountServiceImpl implements AccountService {
                 .email(registrationAccount.getEmail())
                 .password(registrationAccount.getPassword())
                 .role(registrationAccount.getRole())
+                .joined(new Date())
+                .lastUpdated(new Date())
+                .lastLogin(new Date())
                 .isActive(true)
                 .build();
 
@@ -58,6 +61,6 @@ public class AccountServiceImpl implements AccountService {
                 createdAccount.getEmail(),
                 createdAccount.getPhone(),
                 createdAccount.getRole(),
-                new Date());
+                createdAccount.getJoined());
     }
 }
