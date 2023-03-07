@@ -70,6 +70,9 @@ public class Account {
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 
+    @Column(name = "is_non_locked", nullable = false)
+    private Boolean isNonLocked;
+
     @Column(name = "joined", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
@@ -84,5 +87,7 @@ public class Account {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date lastLogin;
+
+
 
 }
