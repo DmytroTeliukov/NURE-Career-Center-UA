@@ -1,0 +1,1 @@
+alter table accounts add column is_non_locked bit default 1;
