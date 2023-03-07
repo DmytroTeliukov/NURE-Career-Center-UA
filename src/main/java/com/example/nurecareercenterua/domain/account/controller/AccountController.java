@@ -3,6 +3,8 @@ package com.example.nurecareercenterua.domain.account.controller;
 import com.example.nurecareercenterua.domain.account.exception.EmailAlreadyRegisteredException;
 import com.example.nurecareercenterua.domain.account.exception.IllegalPasswordArgumentException;
 import com.example.nurecareercenterua.domain.account.exception.PhoneAlreadyRegisteredException;
+import com.example.nurecareercenterua.domain.account.model.dto.AccountDto;
+import com.example.nurecareercenterua.domain.account.model.enums.AccountRole;
 import com.example.nurecareercenterua.domain.account.model.request.RegistrationAccount;
 import com.example.nurecareercenterua.domain.account.model.response.CreatedAccount;
 import com.example.nurecareercenterua.domain.account.service.AccountService;
@@ -12,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/account")
@@ -27,6 +31,13 @@ public class AccountController {
     @PostMapping
     public CreatedAccount register(@RequestBody @Validated RegistrationAccount registrationAccount) {
         return accountService.register(registrationAccount);
+    }
+
+    @GetMapping("/admins")
+    public List<AccountDto> getListAdmins(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return accountService.findAllByRole(AccountRole.ADMIN, page, size);
     }
 
     @ExceptionHandler({EmailAlreadyRegisteredException.class,
