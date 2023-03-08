@@ -11,10 +11,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, UUID> {
+
+    Optional<Account> findAccountByEmail(String email);
     @Query("select case when count(a) > 0 then true else false end " +
             "from Account a where a.email = ?1")
     boolean existsAccountByEmail(String email);
@@ -31,4 +34,8 @@ public interface AccountRepository extends JpaRepository<Account, UUID> {
     @Query("UPDATE Account a set a.isNonLocked = ?2 where a.email = ?1")
     void changeAccessStatus(String email, boolean hasAccess);
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE Account a set a.password = ?2 where a.email = ?1")
+    void changePassword(String email, String newPassword);
 }
