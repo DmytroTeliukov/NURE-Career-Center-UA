@@ -2,9 +2,10 @@ package com.example.nurecareercenterua.domain.account.repository;
 
 import com.example.nurecareercenterua.domain.account.model.entity.Account;
 import com.example.nurecareercenterua.domain.account.model.enums.AccountRole;
-import org.springframework.data.domain.Page;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -25,5 +26,9 @@ public interface AccountRepository extends JpaRepository<Account, UUID> {
     @Query("SELECT a FROM Account a WHERE a.role = :#{#role}")
     List<Account> findAllByAccountRole(@Param("role") AccountRole role, Pageable pageable);
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE Account a set a.isNonLocked = ?2 where a.email = ?1")
+    void changeAccessStatus(String email, boolean hasAccess);
 
 }
