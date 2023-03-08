@@ -1,5 +1,6 @@
 package com.example.nurecareercenterua.domain.account.service.impl;
 
+import com.example.nurecareercenterua.domain.account.exception.AccountNotFoundException;
 import com.example.nurecareercenterua.domain.account.exception.EmailAlreadyRegisteredException;
 import com.example.nurecareercenterua.domain.account.exception.IllegalPasswordArgumentException;
 import com.example.nurecareercenterua.domain.account.exception.PhoneAlreadyRegisteredException;
@@ -8,6 +9,7 @@ import com.example.nurecareercenterua.domain.account.model.dto.AccountDto;
 import com.example.nurecareercenterua.domain.account.model.entity.Account;
 import com.example.nurecareercenterua.domain.account.model.enums.AccountRole;
 import com.example.nurecareercenterua.domain.account.model.request.AccountOperationRequest;
+import com.example.nurecareercenterua.domain.account.model.request.ChangePasswordRequest;
 import com.example.nurecareercenterua.domain.account.model.request.RegistrationAccount;
 import com.example.nurecareercenterua.domain.account.model.response.CreatedAccount;
 import com.example.nurecareercenterua.domain.account.repository.AccountRepository;
@@ -15,6 +17,8 @@ import com.example.nurecareercenterua.domain.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
 
 import java.util.Date;
 import java.util.List;
@@ -78,13 +82,32 @@ public class AccountServiceImpl implements AccountService {
                 accountOperationRequest.operation().getContent());
     }
 
+    @Override
+    public void changePassword(ChangePasswordRequest changePasswordRequest) {
+        String email = changePasswordRequest.email();
+        Account foundAccount = accountRepository.findAccountByEmail(email)
+                .orElseThrow(() -> new AccountNotFoundException("Account with email [" + email + "] does not exists!"));
+
+        validateChangePasswordData(foundAccount.getPassword(), changePasswordRequest);
+
+        accountRepository.changePassword(email, changePasswordRequest.newPassword());
+    }
+
     private void validateRegistrationData(RegistrationAccount registrationAccount) {
         if (accountRepository.existsAccountByEmail(registrationAccount.getEmail())) {
             throw new EmailAlreadyRegisteredException();
         } else if (accountRepository.existsAccountByPhone(registrationAccount.getPhone())) {
             throw new PhoneAlreadyRegisteredException();
         } else if (!registrationAccount.getConfirmedPassword().equals(registrationAccount.getPassword())) {
-            throw new IllegalPasswordArgumentException();
+            throw new IllegalPasswordArgumentException("Password does not match to confirmed!");
+        }
+    }
+
+    private void validateChangePasswordData(String password, ChangePasswordRequest request) {
+        if (!password.equals(request.currentPassword())) {
+            throw new IllegalPasswordArgumentException("Inputted password does not match to current");
+        } else if (!request.newPassword().equals(request.confirmedNewPassword())) {
+            throw new IllegalPasswordArgumentException("New password does not match to confirmed!");
         }
     }
 }
