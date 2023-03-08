@@ -5,6 +5,7 @@ import com.example.nurecareercenterua.domain.account.exception.IllegalPasswordAr
 import com.example.nurecareercenterua.domain.account.exception.PhoneAlreadyRegisteredException;
 import com.example.nurecareercenterua.domain.account.model.dto.AccountDto;
 import com.example.nurecareercenterua.domain.account.model.enums.AccountRole;
+import com.example.nurecareercenterua.domain.account.model.request.AccountOperationRequest;
 import com.example.nurecareercenterua.domain.account.model.request.RegistrationAccount;
 import com.example.nurecareercenterua.domain.account.model.response.CreatedAccount;
 import com.example.nurecareercenterua.domain.account.service.AccountService;
@@ -38,6 +39,12 @@ public class AccountController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         return accountService.findAllByRole(AccountRole.ADMIN, page, size);
+    }
+
+    @PostMapping("/access")
+    public ResponseEntity<?> changeAccountAccess(@RequestBody AccountOperationRequest accountOperationRequest) {
+        accountService.changeAccountAccess(accountOperationRequest);
+        return ResponseEntity.noContent().build();
     }
 
     @ExceptionHandler({EmailAlreadyRegisteredException.class,
