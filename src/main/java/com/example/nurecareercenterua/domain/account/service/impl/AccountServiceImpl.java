@@ -7,6 +7,7 @@ import com.example.nurecareercenterua.domain.account.mapper.AccountMapper;
 import com.example.nurecareercenterua.domain.account.model.dto.AccountDto;
 import com.example.nurecareercenterua.domain.account.model.entity.Account;
 import com.example.nurecareercenterua.domain.account.model.enums.AccountRole;
+import com.example.nurecareercenterua.domain.account.model.request.AccountOperationRequest;
 import com.example.nurecareercenterua.domain.account.model.request.RegistrationAccount;
 import com.example.nurecareercenterua.domain.account.model.response.CreatedAccount;
 import com.example.nurecareercenterua.domain.account.repository.AccountRepository;
@@ -69,6 +70,12 @@ public class AccountServiceImpl implements AccountService {
                 .stream()
                 .map(accountMapper::fromAccount)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void changeAccountAccess(AccountOperationRequest accountOperationRequest) {
+        accountRepository.changeAccessStatus(accountOperationRequest.email(),
+                accountOperationRequest.operation().getContent());
     }
 
     private void validateRegistrationData(RegistrationAccount registrationAccount) {
