@@ -1,4 +1,4 @@
-package com.example.nurecareercenterua.domain.account.controller;
+package com.example.nurecareercenterua.controller;
 
 import com.example.nurecareercenterua.domain.account.exception.AccountNotFoundException;
 import com.example.nurecareercenterua.domain.account.exception.EmailAlreadyRegisteredException;
@@ -12,7 +12,6 @@ import com.example.nurecareercenterua.domain.account.model.request.RegistrationA
 import com.example.nurecareercenterua.domain.account.model.response.CreatedAccount;
 import com.example.nurecareercenterua.domain.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
