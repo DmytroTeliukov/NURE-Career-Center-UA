@@ -42,20 +42,4 @@ public class AccountController {
         return ResponseEntity.noContent().build();
     }
 
-    @ExceptionHandler({EmailAlreadyRegisteredException.class,
-            PhoneAlreadyRegisteredException.class})
-    public ResponseEntity<?> handlerAccountException(Exception e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
-    }
-
-    @ExceptionHandler(IllegalPasswordArgumentException.class)
-    public ResponseEntity<?> handlerPasswordException(Exception e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(AccountNotFoundException.class)
-    public ResponseEntity<?> handlerNotFoundAccountException(Exception e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
 }

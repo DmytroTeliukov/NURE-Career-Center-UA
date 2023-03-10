@@ -1,11 +1,15 @@
 package com.example.nurecareercenterua.controller;
 
+import com.example.nurecareercenterua.domain.account.exception.EmailAlreadyRegisteredException;
+import com.example.nurecareercenterua.domain.account.exception.PhoneAlreadyRegisteredException;
 import com.example.nurecareercenterua.domain.account.model.dto.AccountDto;
 import com.example.nurecareercenterua.domain.account.model.enums.AccountRole;
 import com.example.nurecareercenterua.domain.account.model.request.RegistrationAccount;
 import com.example.nurecareercenterua.domain.account.model.response.CreatedAccount;
 import com.example.nurecareercenterua.domain.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +37,5 @@ public class AdminController {
             @RequestParam(defaultValue = "10") int size) {
         return accountService.findAllByRole(AccountRole.ADMIN, page, size);
     }
-
 
 }
