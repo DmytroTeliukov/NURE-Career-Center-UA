@@ -14,5 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/admins")
 public class AdminController {
 
+    private final AccountService accountService;
 
+    @Autowired
+    public AdminController(AccountService accountService) {
+        this.accountService = accountService;
+    }
+
+    @PostMapping
+    public CreatedAccount register(@RequestBody @Validated RegistrationAccount registrationAccount) {
+        return accountService.register(registrationAccount);
+    }
 }

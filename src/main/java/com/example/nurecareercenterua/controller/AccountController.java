@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/account")
+@RequestMapping("/api/accounts")
 public class AccountController {
 
     private final AccountService accountService;
@@ -28,11 +28,6 @@ public class AccountController {
     @Autowired
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
-    }
-
-    @PostMapping
-    public CreatedAccount register(@RequestBody @Validated RegistrationAccount registrationAccount) {
-        return accountService.register(registrationAccount);
     }
 
     @GetMapping("/admins")
