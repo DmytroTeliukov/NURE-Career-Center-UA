@@ -30,13 +30,6 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @GetMapping("/admins")
-    public List<AccountDto> getListAdmins(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        return accountService.findAllByRole(AccountRole.ADMIN, page, size);
-    }
-
     @PostMapping("/access")
     public ResponseEntity<?> changeAccountAccess(@RequestBody AccountOperationRequest accountOperationRequest) {
         accountService.changeAccountAccess(accountOperationRequest);
