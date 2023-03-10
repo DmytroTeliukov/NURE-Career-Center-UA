@@ -31,7 +31,7 @@ public class AdminController {
         return accountService.register(registrationAccount);
     }
 
-    @GetMapping("/admins")
+    @GetMapping
     public List<AccountDto> getListAdmins(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
