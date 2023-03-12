@@ -7,6 +7,7 @@ import com.example.nurecareercenterua.domain.account.exception.PhoneAlreadyRegis
 import com.example.nurecareercenterua.domain.account.mapper.AccountMapper;
 import com.example.nurecareercenterua.domain.account.model.dto.AccountDto;
 import com.example.nurecareercenterua.domain.account.model.entity.Account;
+import com.example.nurecareercenterua.domain.account.model.enums.AccountOperation;
 import com.example.nurecareercenterua.domain.account.model.enums.AccountRole;
 import com.example.nurecareercenterua.domain.account.model.request.AccountOperationRequest;
 import com.example.nurecareercenterua.domain.account.model.request.ChangePasswordRequest;
@@ -78,8 +79,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void changeAccountAccess(AccountOperationRequest accountOperationRequest) {
-        accountRepository.changeAccessStatus(accountOperationRequest.email(),
-                accountOperationRequest.operation().getContent());
+        boolean accountAccess = accountOperationRequest.operation().equals(AccountOperation.RESTORE);
+        accountRepository.changeAccessStatus(accountOperationRequest.email(), accountAccess);
     }
 
     @Override
