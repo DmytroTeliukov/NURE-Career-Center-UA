@@ -17,8 +17,8 @@ import com.example.nurecareercenterua.domain.account.repository.AccountRepositor
 import com.example.nurecareercenterua.domain.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 
 import java.util.Date;
@@ -31,11 +31,15 @@ public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AccountServiceImpl(AccountRepository accountRepository, AccountMapper accountMapper) {
+    public AccountServiceImpl(AccountRepository accountRepository,
+                              AccountMapper accountMapper,
+                              PasswordEncoder passwordEncoder) {
         this.accountRepository = accountRepository;
         this.accountMapper = accountMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -49,7 +53,7 @@ public class AccountServiceImpl implements AccountService {
                 .patronymic(registrationAccount.getPatronymic())
                 .phone(registrationAccount.getPhone())
                 .email(registrationAccount.getEmail())
-                .password(registrationAccount.getPassword())
+                .password(passwordEncoder.encode(registrationAccount.getPassword()))
                 .role(registrationAccount.getRole())
                 .joined(new Date())
                 .lastUpdated(new Date())
