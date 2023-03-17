@@ -8,12 +8,14 @@ import com.example.nurecareercenterua.domain.account.model.request.ChangePasswor
 import com.example.nurecareercenterua.domain.account.model.request.RegistrationAccount;
 import com.example.nurecareercenterua.domain.account.model.response.CreatedAccount;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
 public interface AccountService {
     CreatedAccount register(RegistrationAccount registrationAccount);
     List<AccountDto> findAllByRole(AccountRole role, int page, int size);
+    Account findAccountByEmail(String email);
     void changeAccountAccess(AccountOperationRequest accountOperationRequest);
     void changePassword(ChangePasswordRequest changePasswordRequest);
 }
