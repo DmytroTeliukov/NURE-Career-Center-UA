@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Date;
@@ -42,6 +43,7 @@ public class AccountServiceImpl implements AccountService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional
     @Override
     public CreatedAccount register(RegistrationAccount registrationAccount) {
         validateRegistrationData(registrationAccount);
@@ -59,6 +61,7 @@ public class AccountServiceImpl implements AccountService {
                 .lastUpdated(new Date())
                 .lastLogin(new Date())
                 .isActive(true)
+                .isNonLocked(true)
                 .build();
 
         Account createdAccount = accountRepository.save(account);
@@ -73,6 +76,7 @@ public class AccountServiceImpl implements AccountService {
                 createdAccount.getJoined());
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<AccountDto> findAllByRole(AccountRole role, int page, int size) {
         return accountRepository.findAllByAccountRole(role, PageRequest.of(page, size))
@@ -81,22 +85,30 @@ public class AccountServiceImpl implements AccountService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public void changeAccountAccess(AccountOperationRequest accountOperationRequest) {
         boolean accountAccess = accountOperationRequest.operation().equals(AccountOperation.RESTORE);
         accountRepository.changeAccessStatus(accountOperationRequest.email(), accountAccess);
     }
 
+    @Transactional
     @Override
     public void changePassword(ChangePasswordRequest changePasswordRequest) {
         String email = changePasswordRequest.email();
-        Account foundAccount = accountRepository.findAccountByEmail(email)
-                .orElseThrow(() -> new AccountNotFoundException("Account with email [" + email + "] does not exists!"));
+        Account foundAccount = findAccountByEmail(email);
 
         validateChangePasswordData(foundAccount.getPassword(), changePasswordRequest);
 
         accountRepository.changePassword(email, changePasswordRequest.newPassword());
     }
+
+    @Override
+    public Account findAccountByEmail(String email) {
+        return accountRepository.findAccountByEmail(email)
+                .orElseThrow(() -> new AccountNotFoundException("Account with email [" + email + "] does not exists!"));
+    }
+
 
     private void validateRegistrationData(RegistrationAccount registrationAccount) {
         if (accountRepository.existsAccountByEmail(registrationAccount.getEmail())) {
