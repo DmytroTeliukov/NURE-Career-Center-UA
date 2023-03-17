@@ -88,6 +88,22 @@ public class Account {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date lastLogin;
 
-
-
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", lastname='" + lastname + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", role=" + role +
+                ", password='" + password + '\'' +
+                ", isActive=" + isActive +
+                ", isNonLocked=" + isNonLocked +
+                ", joined=" + joined +
+                ", lastUpdated=" + lastUpdated +
+                ", lastLogin=" + lastLogin +
+                '}';
+    }
 }
