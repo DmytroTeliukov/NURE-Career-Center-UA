@@ -6,13 +6,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AccountMapper {
-    public AccountDto fromAccount(Account account) {
+    public AccountDto toAccountDto(Account account) {
         return new AccountDto(account.getId(),
                 account.getLastname(),
                 account.getFirstname(),
                 account.getPatronymic(),
                 account.getEmail(),
                 account.getPhone(),
+                account.getRole(),
+                account.getIsNonLocked(),
                 account.getJoined(),
                 account.getLastUpdated(),
                 account.getLastLogin());
