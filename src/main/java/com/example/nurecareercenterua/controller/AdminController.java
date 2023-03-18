@@ -27,6 +27,7 @@ public class AdminController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public CreatedAccount register(@RequestBody @Validated RegistrationAccount registrationAccount) {
         return accountService.register(registrationAccount);
     }
