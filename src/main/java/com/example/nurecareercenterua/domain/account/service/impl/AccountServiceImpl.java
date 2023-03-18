@@ -12,7 +12,7 @@ import com.example.nurecareercenterua.domain.account.model.enums.AccountRole;
 import com.example.nurecareercenterua.domain.account.model.dto.request.AccountOperationRequest;
 import com.example.nurecareercenterua.domain.account.model.dto.request.ChangePasswordRequest;
 import com.example.nurecareercenterua.domain.account.model.dto.request.RegistrationAccount;
-import com.example.nurecareercenterua.domain.account.model.dto.response.CreatedAccount;
+import com.example.nurecareercenterua.domain.account.model.dto.request.response.CreatedAccount;
 import com.example.nurecareercenterua.domain.account.repository.AccountRepository;
 import com.example.nurecareercenterua.domain.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;

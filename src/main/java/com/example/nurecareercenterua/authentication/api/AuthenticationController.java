@@ -1,7 +1,7 @@
 package com.example.nurecareercenterua.authentication.api;
 
 import com.example.nurecareercenterua.domain.account.model.dto.AccountDto;
-import com.example.nurecareercenterua.domain.account.model.dto.request.LoginRequest;
+import com.example.nurecareercenterua.authentication.model.LoginRequest;
 import com.example.nurecareercenterua.domain.account.service.AccountService;
 import com.example.nurecareercenterua.jwt.provider.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;

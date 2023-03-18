@@ -1,4 +1,4 @@
-package com.example.nurecareercenterua.domain.account.model.dto.response;
+package com.example.nurecareercenterua.domain.account.model.dto.request.response;
 
 import com.example.nurecareercenterua.domain.account.model.enums.AccountRole;
 import com.fasterxml.jackson.annotation.JsonProperty;

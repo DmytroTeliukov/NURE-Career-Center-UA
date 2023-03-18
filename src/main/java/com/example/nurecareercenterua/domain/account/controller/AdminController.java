@@ -3,7 +3,7 @@ package com.example.nurecareercenterua.domain.account.controller;
 import com.example.nurecareercenterua.domain.account.model.dto.AccountDto;
 import com.example.nurecareercenterua.domain.account.model.enums.AccountRole;
 import com.example.nurecareercenterua.domain.account.model.dto.request.RegistrationAccount;
-import com.example.nurecareercenterua.domain.account.model.dto.response.CreatedAccount;
+import com.example.nurecareercenterua.domain.account.model.dto.request.response.CreatedAccount;
 import com.example.nurecareercenterua.domain.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
