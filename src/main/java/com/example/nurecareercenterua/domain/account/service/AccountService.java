@@ -1,14 +1,11 @@
 package com.example.nurecareercenterua.domain.account.service;
 
 import com.example.nurecareercenterua.domain.account.model.dto.AccountDto;
-import com.example.nurecareercenterua.domain.account.model.entity.Account;
 import com.example.nurecareercenterua.domain.account.model.enums.AccountRole;
-import com.example.nurecareercenterua.domain.account.model.request.AccountOperationRequest;
-import com.example.nurecareercenterua.domain.account.model.request.ChangePasswordRequest;
-import com.example.nurecareercenterua.domain.account.model.request.RegistrationAccount;
-import com.example.nurecareercenterua.domain.account.model.response.CreatedAccount;
-import org.springframework.data.domain.Page;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import com.example.nurecareercenterua.domain.account.model.dto.request.AccountOperationRequest;
+import com.example.nurecareercenterua.domain.account.model.dto.request.ChangePasswordRequest;
+import com.example.nurecareercenterua.domain.account.model.dto.request.RegistrationAccount;
+import com.example.nurecareercenterua.domain.account.model.dto.response.CreatedAccount;
 
 import java.util.List;
 
