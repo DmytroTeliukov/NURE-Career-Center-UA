@@ -1,5 +1,6 @@
 package com.example.nurecareercenterua.controller;
 
+import com.example.nurecareercenterua.domain.account.model.dto.AccountDto;
 import com.example.nurecareercenterua.domain.account.model.entity.Account;
 import com.example.nurecareercenterua.domain.account.model.request.LoginRequest;
 import com.example.nurecareercenterua.domain.account.service.AccountService;
@@ -34,7 +35,7 @@ public class LoginController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        Account account = accountService.findAccountByEmail(loginRequest.email());
+        AccountDto account = accountService.findAccountByEmail(loginRequest.email());
         HttpHeaders headers = jwtTokenProvider.generateJwtHeader(account);
 
         return new ResponseEntity<>("You are logged in successfully", headers, HttpStatus.OK);
