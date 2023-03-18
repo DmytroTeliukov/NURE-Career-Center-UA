@@ -15,7 +15,7 @@ import java.util.List;
 public interface AccountService {
     CreatedAccount register(RegistrationAccount registrationAccount);
     List<AccountDto> findAllByRole(AccountRole role, int page, int size);
-    Account findAccountByEmail(String email);
+    AccountDto findAccountByEmail(String email);
     void changeAccountAccess(AccountOperationRequest accountOperationRequest);
     void changePassword(ChangePasswordRequest changePasswordRequest);
 }

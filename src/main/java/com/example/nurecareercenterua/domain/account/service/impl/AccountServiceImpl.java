@@ -81,7 +81,7 @@ public class AccountServiceImpl implements AccountService {
     public List<AccountDto> findAllByRole(AccountRole role, int page, int size) {
         return accountRepository.findAllByAccountRole(role, PageRequest.of(page, size))
                 .stream()
-                .map(accountMapper::fromAccount)
+                .map(accountMapper::toAccountDto)
                 .collect(Collectors.toList());
     }
 
@@ -96,7 +96,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void changePassword(ChangePasswordRequest changePasswordRequest) {
         String email = changePasswordRequest.email();
-        Account foundAccount = findAccountByEmail(email);
+        Account foundAccount = getAccountEntityByEmail(email);
 
         validateChangePasswordData(foundAccount.getPassword(), changePasswordRequest);
 
@@ -104,11 +104,15 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account findAccountByEmail(String email) {
+    public AccountDto findAccountByEmail(String email) {
+        Account account = getAccountEntityByEmail(email);
+        return accountMapper.toAccountDto(account);
+    }
+
+    private Account getAccountEntityByEmail(String email) {
         return accountRepository.findAccountByEmail(email)
                 .orElseThrow(() -> new AccountNotFoundException("Account with email [" + email + "] does not exists!"));
     }
-
 
     private void validateRegistrationData(RegistrationAccount registrationAccount) {
         if (accountRepository.existsAccountByEmail(registrationAccount.getEmail())) {
