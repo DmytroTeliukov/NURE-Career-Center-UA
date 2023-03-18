@@ -12,6 +12,8 @@ public record AccountDto(@JsonProperty("id_account") UUID id,
                          @JsonProperty("patronymic") String patronymic,
                          @JsonProperty("email") String email,
                          @JsonProperty("phone") String phone,
+                         @JsonProperty("role") AccountRole role,
+                         @JsonProperty("is_non_locked") boolean isNonLocked,
                          @JsonProperty("joined") Date createdAt,
                          @JsonProperty("last_updated") Date lastUpdated,
                          @JsonProperty("last_login") Date lastLogin) {
