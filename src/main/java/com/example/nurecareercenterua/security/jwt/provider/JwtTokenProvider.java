@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.example.nurecareercenterua.domain.account.model.dto.AccountDto;
 import com.example.nurecareercenterua.domain.account.model.entity.Account;
 import com.example.nurecareercenterua.security.constants.SecurityConstant;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ public class JwtTokenProvider {
     @Value("${jwt.secret}")
     private String secret;
 
-    public HttpHeaders generateJwtHeader(Account account) {
+    public HttpHeaders generateJwtHeader(AccountDto account) {
         String jwt = generateJwtToken(account);
         HttpHeaders headers = new HttpHeaders();
 
@@ -38,13 +39,13 @@ public class JwtTokenProvider {
         return headers;
     }
 
-    public String generateJwtToken(Account account) {
+    public String generateJwtToken(AccountDto account) {
         return JWT.create()
                 .withIssuer(TOKEN_ISSUE)
                 .withAudience()
                 .withIssuedAt(new Date())
-                .withSubject(account.getEmail())
-                .withClaim(ROLE, account.getRole().name())
+                .withSubject(account.email())
+                .withClaim(ROLE, account.role().name())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(secret.getBytes()));
     }
