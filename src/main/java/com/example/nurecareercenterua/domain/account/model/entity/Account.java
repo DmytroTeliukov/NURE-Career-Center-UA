@@ -30,6 +30,9 @@ public class Account {
     @Column(name = "id_account", length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
     private UUID id;
 
+
+    @Column(name = "photo_url", length = 256, nullable = false)
+    private String photoUrl;
     @NotNull(message = "Lastname should not be null")
     @NotBlank(message = "Lastname should not be blank")
     @Column(name = "lastname", length = 30, nullable = false)
