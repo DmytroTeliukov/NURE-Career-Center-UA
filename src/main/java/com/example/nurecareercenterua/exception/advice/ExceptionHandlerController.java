@@ -4,12 +4,14 @@ import com.example.nurecareercenterua.domain.account.exception.AccountNotFoundEx
 import com.example.nurecareercenterua.domain.account.exception.EmailAlreadyRegisteredException;
 import com.example.nurecareercenterua.domain.account.exception.IllegalPasswordArgumentException;
 import com.example.nurecareercenterua.domain.account.exception.PhoneAlreadyRegisteredException;
+import com.example.nurecareercenterua.exception.model.HttpResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,14 +19,21 @@ import java.util.Map;
 public class ExceptionHandlerController {
 
     @ExceptionHandler({EmailAlreadyRegisteredException.class,
-            PhoneAlreadyRegisteredException.class, IllegalPasswordArgumentException.class})
+            PhoneAlreadyRegisteredException.class,
+            IllegalPasswordArgumentException.class})
     public ResponseEntity<?> handlerAccountException(Exception e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        var status = HttpStatus.CONFLICT;
+        var response = generateResponse(e.getMessage(), status);
+
+        return new ResponseEntity<>(response, status);
     }
 
     @ExceptionHandler(AccountNotFoundException.class)
     public ResponseEntity<?> handlerNotFoundAccountException(Exception e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        var status = HttpStatus.NOT_FOUND;
+        var response = generateResponse(e.getMessage(), status);
+
+        return new ResponseEntity<>(response, status);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -34,5 +43,9 @@ public class ExceptionHandlerController {
                 .forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
 
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    private HttpResponse generateResponse(String message, HttpStatus status) {
+        return new HttpResponse(status.name(), status.value(), message, new Date());
     }
 }
