@@ -1,0 +1,1 @@
+alter table accounts add column photo_url varchar(256) not null;
