@@ -1,14 +1,15 @@
-package com.example.nurecareercenterua.domain.account.controller;
+package com.example.nurecareercenterua.domain.account.api;
 
 import com.example.nurecareercenterua.domain.account.model.dto.AccountDto;
 import com.example.nurecareercenterua.domain.account.model.enums.AccountRole;
 import com.example.nurecareercenterua.domain.account.model.dto.request.RegistrationAccount;
-import com.example.nurecareercenterua.domain.account.model.dto.request.response.CreatedAccount;
+import com.example.nurecareercenterua.domain.account.model.dto.response.CreatedAccount;
 import com.example.nurecareercenterua.domain.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,8 +26,10 @@ public class AdminController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CreatedAccount register(@RequestBody @Validated RegistrationAccount registrationAccount) {
-        return accountService.register(registrationAccount);
+    public CreatedAccount register(@RequestPart("registration_account") @Validated RegistrationAccount registrationAccount,
+                                   @RequestPart(name = "image", required = false) MultipartFile image) {
+
+        return accountService.register(registrationAccount, image);
     }
 
     @GetMapping
