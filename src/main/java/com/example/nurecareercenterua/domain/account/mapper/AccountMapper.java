@@ -11,6 +11,7 @@ public class AccountMapper {
                 account.getLastname(),
                 account.getFirstname(),
                 account.getPatronymic(),
+                account.getPhotoUrl(),
                 account.getEmail(),
                 account.getPhone(),
                 account.getRole(),
